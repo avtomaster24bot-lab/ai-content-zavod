@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="680" height="440" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="20">Два агента</text>
+
+    <circle cx="180" cy="220" r="70" fill="#e4f3f0" stroke="#0b6b62" stroke-width="3"/>
+    <text x="180" y="226" text-anchor="middle" class="t" font-size="14" font-weight="800">Радар</text>
+    <circle cx="500" cy="220" r="70" fill="#e4f3f0" stroke="#0b6b62" stroke-width="3"/>
+    <text x="500" y="226" text-anchor="middle" class="t" font-size="14" font-weight="800">Автор</text>
+    <circle cx="340" cy="220" r="48" fill="#f8ebc8" stroke="#d89a12" stroke-width="3"/>
+    <text x="340" y="226" text-anchor="middle" class="t" font-size="14" font-weight="800">Вы</text>
+    
+</svg>

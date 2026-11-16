@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="800" height="420" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="18">Холст n8n — схема, не скриншот программы</text>
+<rect x="40" y="70" width="720" height="320" rx="12" fill="#1b2422"/>
+<rect x="70" y="130" width="130" height="70" rx="10" fill="#26332f" stroke="#159287"/>
+<text x="135" y="170" text-anchor="middle" class="tw" font-size="12">Schedule</text>
+<rect x="250" y="130" width="130" height="70" rx="10" fill="#26332f" stroke="#159287"/>
+<text x="315" y="170" text-anchor="middle" class="tw" font-size="12">Sheets</text>
+<rect x="430" y="130" width="130" height="70" rx="10" fill="#26332f" stroke="#159287"/>
+<text x="495" y="170" text-anchor="middle" class="tw" font-size="12">HTTP</text>
+<rect x="610" y="130" width="130" height="70" rx="10" fill="#26332f" stroke="#d89a12"/>
+<text x="675" y="170" text-anchor="middle" class="tw" font-size="12">Telegram</text>
+<path d="M200 165 H250 M380 165 H430 M560 165 H610" stroke="#9ad7cf" stroke-width="2"/>
+<text x="400" y="250" text-anchor="middle" font-family="Manrope,system-ui,sans-serif" font-size="12" fill="#b7c4bf">Узлы соединяются слева направо. Учётные данные настраиваются отдельно.</text>
+<text x="400" y="280" text-anchor="middle" font-family="Manrope,system-ui,sans-serif" font-size="12" fill="#b7c4bf">Имена пунктов меню сверяйте с docs.n8n.io — версии интерфейса меняются.</text>
+</svg>

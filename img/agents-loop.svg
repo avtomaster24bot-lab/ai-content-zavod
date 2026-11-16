@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="900" height="380" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="900" height="380" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="32" class="serif" font-size="22">Петля двух агентов</text>
+<text x="110" y="52" class="tm" font-size="12">Радар находит тему. Автор пишет. Критик режет воду. Вы — последний фильтр правды.</text>
+<rect x="40" y="90" width="190" height="100" rx="14" fill="#e4f3f0" stroke="#0b6b62"/>
+<text x="135" y="130" text-anchor="middle" class="t" font-size="14" font-weight="800">1. Радар тем</text>
+<text x="135" y="152" text-anchor="middle" class="tm" font-size="12">вопросы клиентов,</text>
+<text x="135" y="170" text-anchor="middle" class="tm" font-size="12">боли, чужие хуки</text>
+<path d="M230 140 H280" stroke="#0b6b62" stroke-width="3"/>
+<rect x="280" y="90" width="190" height="100" rx="14" fill="#fffdf8" stroke="#e3d6c3"/>
+<text x="375" y="130" text-anchor="middle" class="t" font-size="14" font-weight="800">2. Автор</text>
+<text x="375" y="152" text-anchor="middle" class="tm" font-size="12">черновик поста /</text>
+<text x="375" y="170" text-anchor="middle" class="tm" font-size="12">сценария Reels</text>
+<path d="M470 140 H520" stroke="#0b6b62" stroke-width="3"/>
+<rect x="520" y="90" width="190" height="100" rx="14" fill="#fffdf8" stroke="#e3d6c3"/>
+<text x="615" y="130" text-anchor="middle" class="t" font-size="14" font-weight="800">3. Критик</text>
+<text x="615" y="152" text-anchor="middle" class="tm" font-size="12">библия стиля,</text>
+<text x="615" y="170" text-anchor="middle" class="tm" font-size="12">факты, короче</text>
+<path d="M710 140 H760" stroke="#0b6b62" stroke-width="3"/>
+<rect x="760" y="90" width="120" height="100" rx="14" fill="#f8ebc8" stroke="#d89a12" stroke-width="2"/>
+<text x="820" y="130" text-anchor="middle" class="t" font-size="14" font-weight="800">4. Вы</text>
+<text x="820" y="152" text-anchor="middle" class="tm" font-size="12">да / правки</text>
+<text x="820" y="170" text-anchor="middle" class="tm" font-size="12">/ в стол</text>
+<path d="M820 190 V230 H135 V190" fill="none" stroke="#c45a42" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="450" y="250" text-anchor="middle" class="tm" font-size="12">если слабо — тема возвращается в таблицу, статус «переделать»</text>
+<rect x="40" y="280" width="820" height="70" rx="12" fill="#fff" stroke="#e3d6c3"/>
+<text x="60" y="308" class="t" font-size="13" font-weight="800">Библия стиля лежит рядом с каждым черновиком.</text>
+<text x="60" y="328" class="tm" font-size="12">Запрещённые слова, длина фраз, «не обещай цифры, которых нет», «пиши как человек из Алматы, не как буклет».</text>
+</svg>

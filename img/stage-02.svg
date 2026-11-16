@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="680" height="440" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="20">Профиль Instagram</text>
+
+    <rect x="230" y="70" width="220" height="400" rx="28" fill="#1c2b28"/>
+    <rect x="242" y="100" width="196" height="350" rx="8" fill="#fff"/>
+    <circle cx="340" cy="170" r="32" fill="#0b6b62"/>
+    <rect x="270" y="216" width="140" height="10" rx="3" fill="#14231f"/>
+    <rect x="260" y="236" width="160" height="8" rx="3" fill="#e3d6c3"/>
+    <rect x="260" y="250" width="160" height="8" rx="3" fill="#e3d6c3"/>
+    <rect x="270" y="270" width="140" height="24" rx="8" fill="#0b6b62"/>
+    
+</svg>

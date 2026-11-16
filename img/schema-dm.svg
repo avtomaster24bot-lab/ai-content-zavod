@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560" width="420" height="560" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="420" height="560" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="16">Директ — схема переписки</text>
+<rect x="50" y="70" width="320" height="450" rx="16" fill="#fff" stroke="#e3d6c3"/>
+<rect x="70" y="100" width="220" height="70" rx="14" fill="#e4f3f0"/>
+<text x="84" y="128" class="t" font-size="12">Алихан, видел ваш завод</text>
+<text x="84" y="148" class="t" font-size="12">для стоматологии. Можно так?</text>
+<rect x="130" y="190" width="220" height="90" rx="14" fill="#f8ebc8"/>
+<text x="144" y="218" class="t" font-size="12">Можно. За 20 минут покажу,</text>
+<text x="144" y="238" class="t" font-size="12">как выглядят 2 агента</text>
+<text x="144" y="258" class="t" font-size="12">на ваших темах. Удобно завтра?</text>
+</svg>

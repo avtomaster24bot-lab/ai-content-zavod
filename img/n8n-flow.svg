@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 280" width="1100" height="280" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="1100" height="280" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="32" class="serif" font-size="20">Первый сценарий n8n</text>
+<text x="110" y="52" class="tm" font-size="12">Таблица → модель пишет пост → проверка качества → запись обратно → черновик вам в Telegram</text>
+<rect x="40" y="90" width="140" height="110" rx="14" fill="#fff" stroke="#0b6b62" stroke-width="2"/>
+<text x="110" y="128" text-anchor="middle" class="t" font-size="13" font-weight="800">Schedule</text>
+<text x="110" y="148" text-anchor="middle" class="t" font-size="13" font-weight="800">Trigger</text>
+<text x="110" y="180" text-anchor="middle" class="tm" font-size="11">каждый день</text>
+<path d="M180 145 H200" stroke="#0b6b62" stroke-width="2"/>
+<rect x="200" y="90" width="140" height="110" rx="14" fill="#fff" stroke="#0b6b62" stroke-width="2"/>
+<text x="270" y="128" text-anchor="middle" class="t" font-size="13" font-weight="800">Google</text>
+<text x="270" y="148" text-anchor="middle" class="t" font-size="13" font-weight="800">Sheets</text>
+<text x="270" y="180" text-anchor="middle" class="tm" font-size="11">строка status=new</text>
+<path d="M340 145 H360" stroke="#0b6b62" stroke-width="2"/>
+<rect x="360" y="90" width="140" height="110" rx="14" fill="#fff" stroke="#0b6b62" stroke-width="2"/>
+<text x="430" y="128" text-anchor="middle" class="t" font-size="13" font-weight="800">HTTP</text>
+<text x="430" y="148" text-anchor="middle" class="t" font-size="13" font-weight="800">Request</text>
+<text x="430" y="180" text-anchor="middle" class="tm" font-size="11">черновик поста</text>
+<path d="M500 145 H520" stroke="#0b6b62" stroke-width="2"/>
+<rect x="520" y="90" width="140" height="110" rx="14" fill="#fff" stroke="#0b6b62" stroke-width="2"/>
+<text x="590" y="128" text-anchor="middle" class="t" font-size="13" font-weight="800">HTTP</text>
+<text x="590" y="148" text-anchor="middle" class="t" font-size="13" font-weight="800">Request</text>
+<text x="590" y="180" text-anchor="middle" class="tm" font-size="11">проверка стиля</text>
+<path d="M660 145 H680" stroke="#0b6b62" stroke-width="2"/>
+<rect x="680" y="90" width="140" height="110" rx="14" fill="#fff" stroke="#0b6b62" stroke-width="2"/>
+<text x="750" y="128" text-anchor="middle" class="t" font-size="13" font-weight="800">IF</text>
+<text x="750" y="168" text-anchor="middle" class="tm" font-size="11">ок / переделать</text>
+<path d="M820 145 H840" stroke="#0b6b62" stroke-width="2"/>
+<rect x="840" y="90" width="140" height="110" rx="14" fill="#fff" stroke="#0b6b62" stroke-width="2"/>
+<text x="910" y="128" text-anchor="middle" class="t" font-size="13" font-weight="800">Sheets +</text>
+<text x="910" y="148" text-anchor="middle" class="t" font-size="13" font-weight="800">Telegram</text>
+<text x="910" y="180" text-anchor="middle" class="tm" font-size="11">вы жмёте «можно»</text>
+<text x="550" y="240" text-anchor="middle" class="tm" font-size="12">Сценарий специально не публикует в Instagram сам: официальный API не ставит чужую музыку из библиотеки так, как это делает приложение.</text>
+</svg>

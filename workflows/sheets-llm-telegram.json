@@ -1,0 +1,607 @@
+{
+  "name": "Контент-завод: тема из таблицы → черновик → Telegram",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "3da52858-6755-40e7-b4b4-d1ecd388d3a2",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ],
+      "notes": "Нажмите Test workflow, чтобы проверить сценарий вручную. Документация: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.manualtrigger/"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 9,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "49e07fec-af42-4170-9b3a-81229ac3def0",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "notes": "По умолчанию раз в день в 09:00 по часовому поясу инстанса n8n. Проверьте часовой пояс в настройках. Документация: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.scheduletrigger/"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "topics",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "new"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "id": "6ccbb73b-74c3-4de7-a4ee-f54f5803e14e",
+      "name": "Google Sheets Get New Topic",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        260,
+        100
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "Операция чтения строк. Замените REPLACE_WITH_GOOGLE_SHEET_ID на ID таблицы из адресной строки (между /d/ и /edit). Лист назовите topics. Нужна учётная запись Google Sheets OAuth2. Документация: https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.googlesheets/"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3e3b2537-05b9-4dd7-b1a7-fb211f8930d4",
+              "leftValue": "={{ $json.topic }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3f7722bd-04f7-45ea-9955-5a8aeef2375d",
+      "name": "IF Topic Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        500,
+        100
+      ],
+      "notes": "Если новых строк нет, выполнение пойдёт в ложную ветку и остановится. Документация: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.if/"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e13f4172-ed8f-4375-acb5-72c4c078e208",
+              "name": "topic",
+              "value": "={{ $json.topic }}",
+              "type": "string"
+            },
+            {
+              "id": "dd522fe8-5954-4237-b5ea-9f011c6c682a",
+              "name": "format",
+              "value": "={{ $json.format }}",
+              "type": "string"
+            },
+            {
+              "id": "bab8ff5c-3abe-41ad-a8aa-5779c3e6a6a6",
+              "name": "audience",
+              "value": "={{ $json.audience }}",
+              "type": "string"
+            },
+            {
+              "id": "8bfa040f-ae12-4f9b-9f51-14a872797a2f",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e820f0da-978c-4f18-bd50-62cde094daaa",
+      "name": "Edit Fields Keep Topic",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        740,
+        40
+      ],
+      "notes": "Узел Edit Fields (раньше назывался Set). Документация: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.set/"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'gpt-4.1-mini', temperature: 0.4, messages: [ { role: 'system', content: 'Ты автор контента для Instagram личного бренда про нейросети. Пиши по-русски, коротко, без воды и без выдуманных цифр. Формат ответа: только готовый текст поста или сценарий карусели/Reels.' }, { role: 'user', content: 'Тема: ' + $json.topic + '\\nФормат: ' + $json.format + '\\nДля кого: ' + $json.audience + '\\nНапиши черновик. Если это карусель — пронумеруй слайды 1..N. Если Reels — хук, 3 пункта, призыв написать в директ.' } ] }) }}",
+        "options": {}
+      },
+      "id": "7fbb1d88-8b6e-4df8-9c7f-61e3dd77c808",
+      "name": "HTTP Request Draft Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        40
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPENAI_HEADER_CRED",
+          "name": "OpenAI Header Auth"
+        }
+      },
+      "notes": "Учётные данные: Header Auth, имя заголовка Authorization, значение Bearer ВАШ_КЛЮЧ. Ключ не храните в сценарии. Документация узла: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.httprequest/  Документация API: https://platform.openai.com/docs/api-reference/chat/create  Имя модели замените на ту, что доступна в вашем аккаунте."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d60e1a55-43ed-4c70-b221-48d430eab305",
+              "name": "draft",
+              "value": "={{ $json.choices[0].message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "b52941ec-38c7-4fda-a3ce-da11eb64f6f9",
+              "name": "topic",
+              "value": "={{ $('Edit Fields Keep Topic').item.json.topic }}",
+              "type": "string"
+            },
+            {
+              "id": "5e3bcb85-42fa-4bdf-aee6-affe97b0de07",
+              "name": "format",
+              "value": "={{ $('Edit Fields Keep Topic').item.json.format }}",
+              "type": "string"
+            },
+            {
+              "id": "3dad2683-3106-47bc-8072-ed1982cf7fe1",
+              "name": "audience",
+              "value": "={{ $('Edit Fields Keep Topic').item.json.audience }}",
+              "type": "string"
+            },
+            {
+              "id": "0b752440-e5f0-468c-8559-d06f30b547e1",
+              "name": "row_number",
+              "value": "={{ $('Edit Fields Keep Topic').item.json.row_number }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b0780714-d604-4db5-9716-fc2c6e426dc9",
+      "name": "Edit Fields Parse Draft",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1220,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'gpt-4.1-mini', temperature: 0, messages: [ { role: 'system', content: 'Ты строгий редактор. Библия стиля: 1) никаких выдуманных цифр и кейсов; 2) короткие фразы; 3) запрещены слова: инновационный, революционный, уникальный, нейросетка-волшебница; 4) не обещай охват и доход; 5) живой тон человека из Алматы, не буклет. Верни JSON с полями verdict (PASS или FAIL) и critique (кратко, по-русски).' }, { role: 'user', content: 'Тема: ' + $json.topic + '\\nЧерновик:\\n' + $json.draft } ] }) }}",
+        "options": {}
+      },
+      "id": "0ffca955-18b0-4d57-b35b-cb9a64fb48bb",
+      "name": "HTTP Request Quality Check",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1460,
+        40
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPENAI_HEADER_CRED",
+          "name": "OpenAI Header Auth"
+        }
+      },
+      "notes": "Та же учётка Header Auth, что и у черновика."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f920c592-363f-412d-8701-5e747cba4c34",
+              "name": "raw_critique",
+              "value": "={{ $json.choices[0].message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "00d6004a-371f-463a-a0c1-a0c64c374608",
+              "name": "draft",
+              "value": "={{ $('Edit Fields Parse Draft').item.json.draft }}",
+              "type": "string"
+            },
+            {
+              "id": "cad1d8d4-9101-40ee-8934-e4c471229011",
+              "name": "topic",
+              "value": "={{ $('Edit Fields Parse Draft').item.json.topic }}",
+              "type": "string"
+            },
+            {
+              "id": "6f2c85ec-b8d0-40d6-ae75-b844c4176f58",
+              "name": "row_number",
+              "value": "={{ $('Edit Fields Parse Draft').item.json.row_number }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4d417b66-6227-4179-b437-13ef352e99d4",
+      "name": "Edit Fields Parse Critique",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1700,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a550960b-a13d-405d-bf76-017dee517cd7",
+              "leftValue": "={{ $json.raw_critique }}",
+              "rightValue": "PASS",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "af23a811-9ecd-4408-92ea-4b150bca07de",
+      "name": "IF Quality Passed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1940,
+        40
+      ],
+      "notes": "Ищем слово PASS в ответе редактора. Если модель вернула JSON иначе, поправьте условие после первого теста."
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "topics",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "status": "review",
+            "draft": "={{ $json.draft }}",
+            "critique": "={{ $json.raw_critique }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "6865ffed-e9fa-42f0-86f2-4b1a3b027362",
+      "name": "Google Sheets Mark Review",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2180,
+        -80
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_TELEGRAM_CHAT_ID",
+        "text": "=Черновик готов, нужен ваш взгляд.\nТема: {{ $json.topic }}\n\n{{ $json.draft }}\n\nЗаметка редактора:\n{{ $json.raw_critique }}\n\nЕсли ок — скопируйте в Instagram и сами поставьте музыку. Этот сценарий специально ничего не публикует в соцсети.",
+        "additionalFields": {}
+      },
+      "id": "73a792de-4e82-42f1-841c-f9c115b6b845",
+      "name": "Telegram Send Draft",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2420,
+        -80
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_TELEGRAM_CRED",
+          "name": "Telegram account"
+        }
+      },
+      "notes": "Сначала напишите своему боту в Telegram, иначе он не сможет прислать сообщение. Chat ID — ваш личный числовой идентификатор. Документация: https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.telegram/"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "topics",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $json.row_number }}",
+            "status": "rewrite",
+            "draft": "={{ $json.draft }}",
+            "critique": "={{ $json.raw_critique }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "458df87f-906c-4ba0-ad6f-de9084fb4ce6",
+      "name": "Google Sheets Mark Rewrite",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2180,
+        160
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_TELEGRAM_CHAT_ID",
+        "text": "=Редактор завернул черновик.\nТема: {{ $json.topic }}\n\n{{ $json.draft }}\n\nПочему:\n{{ $json.raw_critique }}",
+        "additionalFields": {}
+      },
+      "id": "cb6ac916-ad58-48b3-8024-9e714e849bba",
+      "name": "Telegram Send Rewrite",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2420,
+        160
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_TELEGRAM_CRED",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Get New Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Get New Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Get New Topic": {
+      "main": [
+        [
+          {
+            "node": "IF Topic Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Topic Exists": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields Keep Topic",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Edit Fields Keep Topic": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Draft Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Draft Post": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields Parse Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields Parse Draft": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Quality Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Quality Check": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields Parse Critique",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields Parse Critique": {
+      "main": [
+        [
+          {
+            "node": "IF Quality Passed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Quality Passed": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Mark Review",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets Mark Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Mark Review": {
+      "main": [
+        [
+          {
+            "node": "Telegram Send Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Mark Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Telegram Send Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "Учебный сценарий конструктора ai-content-zavod. Перед запуском замените REPLACE_… значения, привяжите свои учётные данные и отключите Schedule Trigger, пока тестируете вручную. Сценарий не публикует посты в Instagram."
+  }
+}

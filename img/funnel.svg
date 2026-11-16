@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="800" height="360" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="800" height="360" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="32" class="serif" font-size="22">Воронка внутри одного Instagram</text>
+<text x="110" y="52" class="tm" font-size="12">С нуля не прыгаем по площадкам. Путь: контент → профиль → директ → созвон → оплата.</text>
+<polygon points="180,80 620,80 560,150 240,150" fill="#e4f3f0" stroke="#0b6b62"/>
+<text x="400" y="122" text-anchor="middle" class="t" font-size="14" font-weight="800">Reels и карусели (охват незнакомцев)</text>
+<polygon points="240,160 560,160 520,220 280,220" fill="#fffdf8" stroke="#e3d6c3"/>
+<text x="400" y="196" text-anchor="middle" class="t" font-size="14" font-weight="800">Профиль и закреплённые: оффер понятен за 5 секунд</text>
+<polygon points="280,230 520,230 480,290 320,290" fill="#f8ebc8" stroke="#d89a12"/>
+<text x="400" y="266" text-anchor="middle" class="t" font-size="14" font-weight="800">Директ и созвон: разбор, не «продающий скрипт-робот»</text>
+<rect x="320" y="300" width="160" height="40" rx="10" fill="#0b6b62"/>
+<text x="400" y="325" text-anchor="middle" class="tw" font-size="14" font-weight="800">Оплата Kaspi</text>
+</svg>

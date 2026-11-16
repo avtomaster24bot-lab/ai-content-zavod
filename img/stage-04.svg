@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="680" height="440" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="20">Съёмка без лица</text>
+
+    <rect x="140" y="120" width="360" height="220" rx="14" fill="#1c2b28"/>
+    <rect x="160" y="140" width="320" height="180" rx="6" fill="#e4f3f0"/>
+    <rect x="180" y="160" width="180" height="12" rx="3" fill="#0b6b62"/>
+    <rect x="180" y="186" width="260" height="8" rx="3" fill="#e3d6c3"/>
+    <rect x="180" y="206" width="220" height="8" rx="3" fill="#e3d6c3"/>
+    <rect x="280" y="340" width="80" height="12" rx="4" fill="#444"/>
+    <ellipse cx="560" cy="240" rx="36" ry="50" fill="#c45a42"/>
+    <rect x="548" y="290" width="24" height="40" fill="#333"/>
+    
+</svg>

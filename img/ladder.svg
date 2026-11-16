@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="900" height="420" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="900" height="420" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="32" class="serif" font-size="22">Лестница продуктов</text>
+<text x="110" y="52" class="tm" font-size="12">Цены ниже — предложения. Сначала продаём пилот. Курс — после кейсов.</text>
+<rect x="80" y="80" width="740" height="50" rx="12" fill="#e4f3f0" stroke="#e3d6c3"/>
+<text x="100" y="102" class="t" font-size="14" font-weight="800">Бесплатно: гайд / чеклист завода</text>
+<text x="100" y="120" class="tm" font-size="12">лид-магнит, вход в переписку</text>
+<rect x="120" y="145" width="660" height="50" rx="12" fill="#fffdf8" stroke="#e3d6c3"/>
+<text x="140" y="167" class="t" font-size="14" font-weight="800">Низкий чек: готовые промпты и 2 агента</text>
+<text x="140" y="185" class="tm" font-size="12">шаблон, который человек ставит сам</text>
+<rect x="160" y="210" width="580" height="50" rx="12" fill="#f8ebc8" stroke="#e3d6c3"/>
+<text x="180" y="232" class="t" font-size="14" font-weight="800">Пилот «2 агента под ключ» · 80–120 тыс. ₸</text>
+<text x="180" y="250" class="tm" font-size="12">главный оффер с нуля, можно 50/50</text>
+<rect x="200" y="275" width="500" height="50" rx="12" fill="#fffdf8" stroke="#e3d6c3"/>
+<text x="220" y="297" class="t" font-size="14" font-weight="800">Курс / клуб</text>
+<text x="220" y="315" class="tm" font-size="12">после 3–5 живых кейсов</text>
+<rect x="240" y="340" width="420" height="50" rx="12" fill="#f8e4de" stroke="#e3d6c3"/>
+<text x="260" y="362" class="t" font-size="14" font-weight="800">Завод под ключ</text>
+<text x="260" y="380" class="tm" font-size="12">для тех, кто не хочет настраивать сам</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="720" height="420" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="18">Два формата Instagram — схема</text>
+<rect x="70" y="80" width="250" height="300" rx="20" fill="#14231f"/>
+<text x="195" y="130" text-anchor="middle" class="tw" font-size="14" font-weight="800">Reels</text>
+<text x="195" y="160" text-anchor="middle" class="tw" font-size="12">короткое видео 9:16</text>
+<text x="195" y="184" text-anchor="middle" class="tw" font-size="12">музыка из библиотеки</text>
+<text x="195" y="208" text-anchor="middle" class="tw" font-size="12">в приложении</text>
+<text x="195" y="250" text-anchor="middle" class="tw" font-size="12">лучше для охвата</text>
+<text x="195" y="270" text-anchor="middle" class="tw" font-size="12">незнакомцев</text>
+<rect x="400" y="80" width="250" height="300" rx="20" fill="#0b6b62"/>
+<text x="525" y="130" text-anchor="middle" class="tw" font-size="14" font-weight="800">Карусель</text>
+<text x="525" y="160" text-anchor="middle" class="tw" font-size="12">до 20 фото/видео</text>
+<text x="525" y="184" text-anchor="middle" class="tw" font-size="12">листать нужно самому</text>
+<text x="525" y="208" text-anchor="middle" class="tw" font-size="12">музыка — только если</text>
+<text x="525" y="228" text-anchor="middle" class="tw" font-size="12">в карусели нет видео</text>
+<text x="525" y="270" text-anchor="middle" class="tw" font-size="12">ближе к «слайдам»</text>
+<text x="525" y="290" text-anchor="middle" class="tw" font-size="12">Ларри, но не копия TikTok</text>
+</svg>

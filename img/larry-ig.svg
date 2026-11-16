@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="1000" height="520" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="32" class="serif" font-size="20">Метод Ларри → Instagram</text>
+<text x="110" y="52" class="tm" font-size="12">У Ларри это были слайд-шоу в TikTok. Здесь — два безопасных пути: карусель с музыкой или Reel.</text>
+<rect x="40" y="80" width="440" height="200" rx="14" fill="#fff" stroke="#e3d6c3"/>
+<text x="60" y="108" class="t" font-size="15" font-weight="800">Как было у Ларри (TikTok)</text>
+<text x="60" y="136" class="t" font-size="13">1. Исследовать чужие хуки</text>
+<text x="60" y="158" class="t" font-size="13">2. Собрать 6 вертикальных картинок</text>
+<text x="60" y="180" class="t" font-size="13">3. Наложить короткий текст</text>
+<text x="60" y="202" class="t" font-size="13">4. Положить черновик в Postiz (SELF_ONLY)</text>
+<text x="60" y="224" class="t" font-size="13">5. Человек ставит трендовый звук и публикует</text>
+<text x="60" y="256" class="tm" font-size="12">Источник метода: страница навыка Larry на ClawHub</text>
+<rect x="520" y="80" width="440" height="200" rx="14" fill="#e4f3f0" stroke="#0b6b62"/>
+<text x="540" y="108" class="t" font-size="15" font-weight="800">Как повторить в Instagram</text>
+<text x="540" y="136" class="t" font-size="13">1. Те же хуки и 6–10 вертикальных кадров</text>
+<text x="540" y="158" class="t" font-size="13">2а. Карусель только из фото + музыка в приложении</text>
+<text x="540" y="180" class="t" font-size="13">2б. Или склеить кадры в короткое видео-Reels</text>
+<text x="540" y="202" class="t" font-size="13">3. Черновик вам в Telegram / в камеру приложения</text>
+<text x="540" y="224" class="t" font-size="13">4. Вы ставите аудио из библиотеки и публикуете</text>
+<text x="540" y="256" class="tm" font-size="12">Музыку к карусели и чужой трек к Reel API сам не ставит</text>
+<rect x="40" y="300" width="920" height="190" rx="14" fill="#fff" stroke="#e3d6c3"/>
+<text x="60" y="330" class="t" font-size="15" font-weight="800">Почему нельзя просто «как TikTok, только автопостинг в Instagram»</text>
+<text x="60" y="358" class="t" font-size="13">• Карусель в ленте — это не то же самое, что слайд-шоу TikTok: листать нужно самому, а охват незнакомцев чаще даёт Reels.</text>
+<text x="60" y="382" class="t" font-size="13">• Официальный API публикует карусели и Reels, но тегирование музыки для Reels — только для original audio.</text>
+<text x="60" y="406" class="t" font-size="13">• Неофициальные боты, скрипты и «вход по паролю» противоречат правилам Meta и Instagram.</text>
+<text x="60" y="430" class="t" font-size="13">• Повтор одинаковых постов и массовые сообщения без согласия — это спам по Community Guidelines.</text>
+<text x="60" y="462" class="tm" font-size="12">Ссылки на официальные страницы — в этапе 4 и в разделе «Источники».</text>
+</svg>

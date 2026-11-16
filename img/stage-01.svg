@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" role="img">
+  <defs>
+    <style>
+      .t{font-family:Manrope,system-ui,sans-serif;fill:#14231f}
+      .tm{font-family:Manrope,system-ui,sans-serif;fill:#4d5c57}
+      .tw{font-family:Manrope,system-ui,sans-serif;fill:#fff}
+      .serif{font-family:Fraunces,Georgia,serif;fill:#14231f}
+    </style>
+  </defs>
+  <rect width="680" height="440" rx="18" fill="#f4efe4"/>
+<g><rect x="16" y="16" width="78" height="18" rx="4" fill="#f8ebc8"/><text x="24" y="29" font-size="10" font-weight="800" font-family="Manrope,system-ui,sans-serif" fill="#7a5604">СХЕМА</text></g>
+<text x="110" y="34" class="serif" font-size="20">Оплата</text>
+
+    <rect x="140" y="140" width="260" height="170" rx="16" fill="#0b6b62"/>
+    <circle cx="200" cy="200" r="24" fill="#f8ebc8"/>
+    <rect x="250" y="188" width="120" height="12" rx="3" fill="#fff"/>
+    <rect x="250" y="210" width="90" height="10" rx="3" fill="#d4efe9"/>
+    <rect x="430" y="170" width="160" height="110" rx="12" fill="#fff" stroke="#e3d6c3"/>
+    <text x="510" y="230" text-anchor="middle" class="t" font-size="28" font-weight="800">₸</text>
+    
+</svg>
