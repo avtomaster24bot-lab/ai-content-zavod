@@ -18,3 +18,10 @@
 ## Важно
 
 Цены внутри помечены как предложения. Лимиты и тарифы сверялись по официальным страницам 16 ноября 2026 (Азия/Алматы) и могут измениться. Сайт не является офертой и не заменяет юридическую или налоговую консультацию.
+
+## Агенты и неделя 1
+
+- Инструкции: [`agents/radar.md`](agents/radar.md), [`agents/avtor.md`](agents/avtor.md). Страница: https://avtomaster24bot-lab.github.io/ai-content-zavod/agents/
+- Пакет контента 16–22 ноября 2026: [`content/week1/`](content/week1/). Страница: https://avtomaster24bot-lab.github.io/ai-content-zavod/content/week1/
+- Обложки каруселей (1080×1350) и аватар (1080×1080): `content/week1/img/`
+
