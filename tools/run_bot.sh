@@ -27,6 +27,6 @@ supervise() {
   rm -f "$PIDFILE"
 }
 
-nohup bash -c "$(declare -f supervise); DIR='$DIR' LOG='$LOG' PIDFILE='$PIDFILE' supervise" >/dev/null 2>&1 &
+setsid nohup bash -c "$(declare -f supervise); DIR='$DIR' LOG='$LOG' PIDFILE='$PIDFILE' supervise" >/dev/null 2>&1 &
 echo $! >"$PIDFILE"
 echo "Бот запущен, PID $(cat "$PIDFILE"), лог: $LOG"
