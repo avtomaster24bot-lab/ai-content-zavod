@@ -17,6 +17,8 @@ from pathlib import Path
 BASE = os.environ.get("AGNES_BASE_URL", "https://apihub.agnes-ai.com/v1")
 ROOT = Path(__file__).resolve().parent.parent
 TEXT_MODEL = os.environ.get("ZAVOD_TEXT_MODEL", "agnes-2.5-pro")
+# Если на платную модель не хватает баланса — переключаемся на бесплатные.
+FALLBACK_MODELS = ["agnes-2.5-flash", "agnes-3.0-flash"]
 IMAGE_MODEL = os.environ.get("ZAVOD_IMAGE_MODEL", "agnes-image-2.5-flash")
 
 BANNED = [
@@ -71,11 +73,36 @@ def _post(path, body, timeout=300, retries=3):
     raise last
 
 
+_NO_QUOTA = {"until": 0}
+
+
+def _quota_error(e):
+    m = str(e)
+    return ("402" in m or "403" in m) and ("quota" in m.lower() or "balance" in m.lower() or "credit" in m.lower())
+
+
 def chat(system, user, model=None, max_tokens=16000, temperature=0.7):
-    model = model or TEXT_MODEL
-    r = _post("/chat/completions", {
-        "model": model, "temperature": temperature, "max_tokens": max_tokens,
-        "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]})
+    first = model or TEXT_MODEL
+    models = [first] + [m for m in FALLBACK_MODELS if m != first]
+    if time.time() < _NO_QUOTA["until"] and first not in FALLBACK_MODELS:
+        models = [m for m in models if m in FALLBACK_MODELS]  # баланс пуст — сразу бесплатные
+    last = None
+    for model in models:
+        try:
+            r = _post("/chat/completions", {
+                "model": model, "temperature": temperature, "max_tokens": max_tokens,
+                "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]})
+            break
+        except AgnesError as e:
+            last = e
+            if _quota_error(e):
+                print(f"[{model}] нет баланса — пробую бесплатную модель", file=sys.stderr)
+                if model not in FALLBACK_MODELS:
+                    _NO_QUOTA["until"] = time.time() + 1800
+                continue
+            raise
+    else:
+        raise last
     ch = r["choices"][0]
     text = (ch["message"].get("content") or "").strip()  # reasoning_content игнорируем
     if ch.get("finish_reason") == "length":
