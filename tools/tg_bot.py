@@ -13,6 +13,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import zavod  # noqa: E402
+import fabrika_text  # noqa: E402
+import fabrika_render  # noqa: E402
+import shutil  # noqa: E402
 
 ROOT = zavod.ROOT
 HOME = Path.home()
@@ -56,19 +59,22 @@ def tg(method, _timeout=70, **params):
         raise RuntimeError(f"Telegram {method} {e.code}: {body}")
 
 
-def tg_multipart(method, fields, file_field, filename, content, mime):
+def tg_multipart(method, fields, files, timeout=300):
+    """files: список (имя_поля, имя_файла, байты, mime)."""
     boundary = uuid.uuid4().hex
     buf = io.BytesIO()
     for k, v in fields.items():
         buf.write(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode())
-    buf.write(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{file_field}\"; filename=\"{filename}\"\r\n"
-              f"Content-Type: {mime}\r\n\r\n".encode())
-    buf.write(content)
-    buf.write(f"\r\n--{boundary}--\r\n".encode())
+    for field, filename, content, mime in files:
+        buf.write(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{field}\"; filename=\"{filename}\"\r\n"
+                  f"Content-Type: {mime}\r\n\r\n".encode())
+        buf.write(content)
+        buf.write(b"\r\n")
+    buf.write(f"--{boundary}--\r\n".encode())
     req = urllib.request.Request(f"{API}/{method}", data=buf.getvalue(),
                                  headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
     try:
-        with urllib.request.urlopen(req, timeout=120) as r:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
             return json.load(r)["result"]
     except urllib.error.HTTPError as e:
         raise RuntimeError(f"Telegram {method} {e.code}: {e.read()[:300].decode('utf-8', 'replace')}")
@@ -100,14 +106,32 @@ def send(chat, text, buttons=None):
         tg("sendMessage", **p)
 
 
-def send_doc(chat, name, text, caption=""):
-    tg_multipart("sendDocument", {"chat_id": chat, "caption": caption[:1000]}, "document", name,
-                 text.encode("utf-8"), "text/markdown")
+def send_doc(chat, name, data, caption="", mime="text/markdown"):
+    if isinstance(data, str):
+        data = data.encode("utf-8")
+    tg_multipart("sendDocument", {"chat_id": chat, "caption": caption[:1000]}, [("document", name, data, mime)])
 
 
 def send_photo(chat, path, caption=""):
-    tg_multipart("sendPhoto", {"chat_id": chat, "caption": caption[:1000]}, "photo", Path(path).name,
-                 Path(path).read_bytes(), "image/jpeg")
+    tg_multipart("sendPhoto", {"chat_id": chat, "caption": caption[:1000]},
+                 [("photo", Path(path).name, Path(path).read_bytes(), "image/jpeg")])
+
+
+def send_album(chat, paths):
+    """Альбом до 10 фото одним сообщением."""
+    paths = [Path(p) for p in paths][:10]
+    media = [{"type": "photo", "media": f"attach://f{i}"} for i in range(len(paths))]
+    files = [(f"f{i}", p.name, p.read_bytes(), "image/jpeg") for i, p in enumerate(paths)]
+    tg_multipart("sendMediaGroup", {"chat_id": chat, "media": json.dumps(media)}, files)
+
+
+def send_video(chat, path, thumb=None, seconds=0):
+    files = [("video", Path(path).name, Path(path).read_bytes(), "video/mp4")]
+    fields = {"chat_id": chat, "supports_streaming": "true", "width": 1080, "height": 1920, "duration": int(seconds)}
+    if thumb:
+        files.append(("thumbnail", "thumb.jpg", Path(thumb).read_bytes(), "image/jpeg"))
+        fields["thumbnail"] = "attach://thumbnail"
+    tg_multipart("sendVideo", fields, files, timeout=600)
 
 
 def typing(chat, action="typing"):
@@ -145,9 +169,10 @@ MENU = [[{"text": "🎯 Темы на неделю", "callback_data": "radar"}],
         [{"text": "✍️ Написать пост по теме", "callback_data": "howto"}],
         [{"text": "📂 Одобренные", "callback_data": "approved"}]]
 
-HELP = ("Я — ИИ-контент-завод. Делаю черновики, публикуешь ты сам.\n\n"
+HELP = ("Я — ИИ-контент-завод. Делаю готовый контент, публикуешь ты сам.\n\n"
         "🎯 Темы на неделю — радар даёт 10 тем на следующую неделю.\n"
-        "Нажми на тему — автор напишет пост и сделает обложку.\n\n"
+        "Нажми на тему — получишь готовое: карусель (альбом слайдов + zip), Reels (видео с голосом и субтитрами) "
+        "или stories (кадры 1080×1920) и подпись.\n\n"
         "Или напиши сам:\nтема: Почему я начинаю с таблицы, формат: карусель 8 слайдов\n\n"
         "Под черновиком: ✅ Одобрить (сохраню в репозиторий), 🔁 Переделать, ✏️ Правка.")
 
@@ -219,7 +244,7 @@ def do_radar(chat):
     lines = [f"🎯 Темы на {week}\n"]
     for r in rows:
         lines.append(f"{r['n']}. {r['topic']}\n   Формат: {r['format']}\n   Хук: {r['hook']}\n")
-    lines.append("Нажми на номер темы — напишу пост и сделаю обложку.")
+    lines.append("Нажми на номер темы — соберу готовый пост (карусель — 1–2 мин, Reels — 2–4 мин).")
     btns, row = [], []
     for r in rows:
         row.append({"text": f"{r['n']}. {r['topic'][:28]}", "callback_data": f"t:{r['n']}"})
@@ -260,37 +285,67 @@ def cover_title(t):
     return "\n".join(parts)
 
 
+KIND_RU = {"carousel": "карусель", "reels": "Reels", "stories": "stories"}
+
+
+def draft_buttons(did):
+    return [[{"text": "✅ Одобрить", "callback_data": f"a:{did}"},
+             {"text": "🔁 Переделать", "callback_data": f"r:{did}"}],
+            [{"text": "✏️ Правка", "callback_data": f"e:{did}"}]]
+
+
 def make_draft(chat, topic, fmt, extra="", draft_id=None, keep_cover=None):
-    send(chat, "✍️ Пишу пост… (до минуты)")
-    typing(chat)
-    text, issues = zavod.avtor(topic, fmt, extra, tries=2, log=log)
-    did = draft_id or dt.datetime.now(TZ).strftime("%m%d%H%M%S")
-    cover_path = keep_cover
-    if not cover_path:
+    """Готовый контент: текст (JSON) → рендер (слайды / видео / кадры) → отправка."""
+    t0 = time.time()
+    did = dt.datetime.now(TZ).strftime("%m%d%H%M%S")
+    out = WORK / did
+    out.mkdir(parents=True, exist_ok=True)
+    prog = lambda m: send(chat, m)
+    kind, data, issues = fabrika_text.generate(topic, fmt, extra, log=log, progress=prog)
+    caption = fabrika_text.caption_text(data)
+    (out / "content.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    info = {}
+    if kind == "carousel":
+        prog(f"🎨 Рисую слайды ({len(data['slides']) + 1} шт.)…")
         typing(chat, "upload_photo")
-        cover_path = str(WORK / f"{did}.jpg")
-        try:
-            zavod.cover(f"an illustration for the topic: {topic[:300]}", cover_title(title_of(text) or topic),
-                        label_for(fmt) + " · черновик", out_path=cover_path)
-        except Exception as e:
-            log(f"cover error: {e}")
-            cover_path = None
+        files = fabrika_render.render_carousel(data, out / "slides", log)
+        zipf = fabrika_render.zip_files(files, out / "karusel.zip")
+        send_album(chat, files)
+        send_doc(chat, "karusel.zip", zipf.read_bytes(), "Все слайды в полном качестве (1080×1350)", "application/zip")
+        media = [str(f) for f in files] + [str(zipf)]
+    elif kind == "stories":
+        prog(f"🎨 Рисую кадры stories ({len(data['frames'])} шт.)…")
+        typing(chat, "upload_photo")
+        files = fabrika_render.render_stories(data, out / "stories", log)
+        send_album(chat, files)
+        media = [str(f) for f in files]
+    else:
+        final, thumb, info = fabrika_render.render_reels(data, out / "reels", log, prog)
+        prog("📤 Загружаю видео…")
+        typing(chat, "upload_video")
+        send_video(chat, final, thumb, info.get("seconds", 0))
+        media = [str(final), str(thumb), str(out / "reels" / "script.txt")]
+    (out / "caption.txt").write_text(caption, encoding="utf-8")
     with lock:
         st = load_state()
-        st["drafts"][did] = {"topic": topic, "format": fmt, "text": text, "cover": cover_path,
-                             "issues": issues, "chat": chat}
-        # храним только последние 30 черновиков
+        st["drafts"][did] = {"topic": topic, "format": fmt, "kind": kind, "data": data, "caption": caption,
+                             "dir": str(out), "media": media, "issues": issues, "chat": chat}
         for k in list(st["drafts"])[:-30]:
-            st["drafts"].pop(k, None)
+            old = st["drafts"].pop(k, None)
+            if old and old.get("dir"):
+                shutil.rmtree(old["dir"], ignore_errors=True)
         save_state(st)
-    if cover_path:
-        send_photo(chat, cover_path, "Обложка 1080×1350")
-    else:
-        send(chat, "Обложку сделать не получилось, текст ниже.")
-    note = ("\n\n⚠️ Проверка нашла: " + "; ".join(issues)) if issues else "\n\n✔️ Автопроверка: запрещённых слов нет, «завод» на месте."
-    send(chat, text + note, [[{"text": "✅ Одобрить", "callback_data": f"a:{did}"},
-                              {"text": "🔁 Переделать", "callback_data": f"r:{did}"}],
-                             [{"text": "✏️ Правка", "callback_data": f"e:{did}"}]])
+    took = int(time.time() - t0)
+    head = {"carousel": "📝 Подпись к карусели — копируй целиком:",
+            "reels": "📝 Подпись к Reels — копируй целиком:",
+            "stories": "📝 Stories готовы. Музыку и стикеры добавь в Instagram."}[kind]
+    extra_line = ""
+    if kind == "reels":
+        extra_line = f"\n\n⏱ {info.get('seconds')} с · голос: {info.get('tts', '')}. Музыку добавь в Instagram."
+    if issues:
+        log("остались замечания: " + "; ".join(issues))
+    body = head + ("\n\n" + caption if kind != "stories" else "") + extra_line + f"\n\n(собрано за {took} с)"
+    send(chat, body, draft_buttons(did))
 
 
 def slug(t):
@@ -312,30 +367,47 @@ def git(*args):
 def approve(chat, did):
     st = load_state()
     d = st["drafts"].get(did)
-    if not d:
+    if not d or "kind" not in d:
         send(chat, "Этот черновик уже не найден. Сделай новый.", MENU); return
-    APPROVED.mkdir(parents=True, exist_ok=True)
-    name = dt.datetime.now(TZ).strftime("%Y-%m-%d") + "-" + slug(title_of(d["text"]) or d["topic"])
-    md = APPROVED / f"{name}.md"
-    body = d["text"].rstrip() + f"\n\n---\nОдобрено в Telegram {dt.datetime.now(TZ):%d.%m.%Y %H:%M} (Алматы). Формат: {d['format']}.\n"
-    files = [md]
-    if d.get("cover") and Path(d["cover"]).exists():
-        img = APPROVED / f"{name}.jpg"
-        img.write_bytes(Path(d["cover"]).read_bytes())
-        body = f"![Обложка]({img.name})\n\n" + body
-        files.append(img)
-    md.write_text(body, encoding="utf-8")
+    data = d["data"]
+    title = data.get("title") or data.get("hook") or (data.get("frames") or [{}])[0].get("title") or d["topic"]
+    name = dt.datetime.now(TZ).strftime("%Y-%m-%d") + "-" + d["kind"] + "-" + slug(title)
+    dest = APPROVED / name
+    dest.mkdir(parents=True, exist_ok=True)
+    to_git, skipped = [], []
+    for m in d["media"]:
+        p = Path(m)
+        if not p.exists():
+            continue
+        q = dest / p.name
+        shutil.copy2(p, q)
+        if q.suffix == ".zip":
+            continue  # zip — только для отправки в Telegram, в репозитории есть сами слайды
+        if q.stat().st_size > 20 * 1024 * 1024:
+            skipped.append(q)
+        else:
+            to_git.append(q)
+    (dest / "caption.txt").write_text(d["caption"], encoding="utf-8")
+    (dest / "content.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    readme = [f"# {title}", "", f"Формат: {KIND_RU[d['kind']]}. Одобрено в Telegram "
+              f"{dt.datetime.now(TZ):%d.%m.%Y %H:%M} (Алматы).", "", "## Подпись", "", d["caption"]]
+    if skipped:
+        readme += ["", "Видео больше 20 МБ — в репозиторий не добавлено, лежит на компьютере завода: "
+                   + ", ".join(str(x) for x in skipped)]
+    (dest / "README.md").write_text("\n".join(readme) + "\n", encoding="utf-8")
+    to_git += [dest / "caption.txt", dest / "content.json", dest / "README.md"]
     try:
         with lock:
             git("pull", "--rebase", "--autostash", "-q")
-            git("add", *[str(f) for f in files])
+            git("add", *[str(f) for f in to_git])
             git("commit", "-q", "-m", f"Approved via Telegram: {name}")
             git("push", "-q")
-        url = f"https://github.com/avtomaster24bot-lab/ai-content-zavod/blob/main/content/approved/{md.name}"
-        send(chat, f"✅ Сохранено и отправлено в репозиторий:\n{url}\n\nМузыку и публикацию в Instagram делаешь сам.", MENU)
+        url = f"https://github.com/avtomaster24bot-lab/ai-content-zavod/tree/main/content/approved/{name}"
+        note = ("\n\n⚠️ Видео больше 20 МБ, в GitHub не положил — оно на компьютере завода." if skipped else "")
+        send(chat, f"✅ Сохранено в репозиторий:\n{url}{note}\n\nМузыку и публикацию в Instagram делаешь сам.", MENU)
     except Exception as e:
         log(f"git error: {e}")
-        send(chat, f"Файл сохранён на компьютере ({md.relative_to(ROOT)}), но отправить в GitHub не вышло. Попробую при следующем одобрении.", MENU)
+        send(chat, f"Файлы сохранены на компьютере ({dest.relative_to(ROOT)}), но отправить в GitHub не вышло.", MENU)
 
 
 def handle_callback(cq):
@@ -362,12 +434,12 @@ def handle_callback(cq):
     elif data[:2] in ("a:", "r:", "e:"):
         did = data[2:]
         d = st["drafts"].get(did)
-        if not d:
-            send(chat, "Этот черновик уже не найден. Сделай новый.", MENU); return
+        if not d or "kind" not in d:
+            send(chat, "Этот черновик из старой версии бота. Выбери тему заново — теперь пришлю готовый контент.", MENU); return
         if data.startswith("a:"):
             approve(chat, did)
         elif data.startswith("r:"):
-            make_draft(chat, d["topic"], d["format"], "Напиши заново, другим заходом. Не повторяй предыдущую версию.")
+            make_draft(chat, d["topic"], d["format"], "Напиши заново, другим заходом и другими словами. Не повторяй предыдущую версию.")
         else:
             with lock:
                 st = load_state(); st["await_edit"] = did; save_state(st)
@@ -391,9 +463,10 @@ def handle_message(msg):
             st = load_state(); st["await_edit"] = None; save_state(st)
         d = st["drafts"].get(did)
         if d:
+            prev = json.dumps(d.get("data"), ensure_ascii=False) if d.get("data") else d.get("text", "")
             extra = ("Правка редактора — выполни точно: " + text + "\n\nПредыдущая версия (исправь её, "
-                     "а не пиши с нуля):\n" + d["text"])
-            make_draft(chat, d["topic"], d["format"], extra, keep_cover=d.get("cover"))
+                     "а не пиши с нуля, сохрани всё, что правка не трогает):\n" + prev)
+            make_draft(chat, d["topic"], d["format"], extra)
             return
     m = TOPIC_RE.search(text)
     if m:

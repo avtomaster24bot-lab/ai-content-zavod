@@ -33,7 +33,7 @@ LATIN_OK = {"n8n", "kaspi", "reels", "reel", "instagram", "chatgpt", "claude", "
             "google", "agnes", "mcp", "api", "ai", "python", "zavod", "py", "github", "stories", "codex",
             "anthropic", "gpt", "live", "astra", "sol", "tilda", "marketing_dir", "dictation", "content",
             "protection", "voice", "standard", "advanced", "beta", "flash", "pro", "tools", "md", "facebook",
-            "meta", "postiz", "tiktok", "larry", "vpn", "mvp", "cta", "dm", "excel", "sheets", "notion", "pdf"}
+            "meta", "enter", "postiz", "tiktok", "larry", "vpn", "mvp", "cta", "dm", "excel", "sheets", "notion", "pdf"}
 
 STYLE = ("Minimal flat editorial illustration on warm cream paper background (#F4EFE4), "
          "dark teal (#1F665C) and mustard orange (#D69228) accents, thin clean lines, calm, lots of empty "
