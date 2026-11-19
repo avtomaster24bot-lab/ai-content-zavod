@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Неделя 2 — пакет контента · ИИ-завод</title>
+  <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><a href="../../index.html">← Конструктор</a> · <a href="../week1/">Неделя 1</a></p>
+      <h1>Неделя 2: завод запущен через Agnes API</h1>
+      <p class="lead">23–29 ноября 2026, Азия/Алматы. Радар и Автор впервые запущены одной командой скриптом <code>tools/zavod.py</code> через Agnes AI API, а не копированием промта в чат. Свежие новости открыты заранее и переданы в промпт со ссылками. Тексты проверены автоматически (запрещённые слова, кодовое слово, цифры) и вручную. Цена пилота — предложение.</p>
+    </div>
+  </header>
+  <main>
+    <section class="section">
+      <div class="wrap">
+        <h2>Как это собрано</h2>
+        <div class="card">
+          <p><a href="00-radar-otchet.md">Отчёт радара: 10 тем, «не брать», проверка редактора и выбор 7</a></p>
+          <p>Входы радара: <a href="_facts.md">проверенные факты недели со ссылками</a> и <a href="_published.md">что уже вышло</a>.</p>
+          <p>Модели: тексты — <code>agnes-2.5-pro</code>, обложки — <code>agnes-image-2.5-flash</code> (фон), заголовок наложен кодом шрифтом PT Serif.</p>
+          <p>Скрипт: <a href="https://github.com/avtomaster24bot-lab/ai-content-zavod/blob/main/tools/zavod.py">tools/zavod.py</a>, инструкция — в <a href="https://github.com/avtomaster24bot-lab/ai-content-zavod#запуск-через-agnes-api">README</a>.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>Обложки</h2>
+        <p class="note">1080×1350. Фон сгенерирован Agnes без текста (исходники — в <code>_src/</code>), заголовок наложен кодом.</p>
+        <div class="two" style="margin-top:16px">
+          <figure class="illust"><img src="img/cover-odna-komanda.jpg" alt="Обложка: Одна команда. Два агента."><figcaption class="caption">Пн · одна команда</figcaption></figure>
+          <figure class="illust"><img src="img/cover-posle-zavod.jpg" alt="Обложка: Вы пишете «завод». Дальше — моя очередь."><figcaption class="caption">Вт · после «завод»</figcaption></figure>
+        </div>
+        <div class="two" style="margin-top:16px">
+          <figure class="illust"><img src="img/cover-n8n-zhdu.jpg" alt="Обложка: n8n не ставил. Не прокрастинация."><figcaption class="caption">Чт · n8n подождёт</figcaption></figure>
+          <figure class="illust"><img src="img/cover-kaspi-5050.jpg" alt="Обложка: Половину — сейчас. Вторую — после."><figcaption class="caption">Сб · Kaspi 50/50</figcaption></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>Семь материалов</h2>
+        <div class="card" style="overflow:auto">
+          <table>
+            <thead><tr><th>День</th><th>Формат</th><th>Хук</th><th>Текст</th></tr></thead>
+            <tbody>
+              <tr><td>Пн 23.11</td><td>Reels</td><td>Одна строка в терминале. Два агента уже пишут.</td><td><a href="01-pn-reels-odna-komanda.md">открыть</a></td></tr>
+              <tr><td>Вт 24.11</td><td>Карусель 8 сл.</td><td>Вы пишете «завод». Дальше — моя очередь.</td><td><a href="02-vt-karusel-posle-zavod.md">открыть</a></td></tr>
+              <tr><td>Ср 25.11</td><td>Reels</td><td>GPT-6.2 Astra вышла. Мой завод на Agnes. И это не лояльность.</td><td><a href="03-sr-reels-gpt62-agnes.md">открыть</a></td></tr>
+              <tr><td>Чт 26.11</td><td>Карусель 7 сл.</td><td>n8n не ставил. Не прокрастинация.</td><td><a href="04-cht-karusel-n8n-zhdu.md">открыть</a></td></tr>
+              <tr><td>Пт 27.11</td><td>Stories 4 кадра</td><td>Тёплый список есть. Писать не начал.</td><td><a href="05-pt-stories-teplyi-spisok.md">открыть</a></td></tr>
+              <tr><td>Сб 28.11</td><td>Карусель 7 сл.</td><td>Половину — сейчас. Вторую — после.</td><td><a href="06-sb-karusel-kaspi-5050.md">открыть</a></td></tr>
+              <tr><td>Вс 29.11</td><td>Reels</td><td>Алматы. «ИИ забрал мою профессию». Я скажу иначе.</td><td><a href="07-vs-reels-professiya.md">открыть</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note" style="margin-top:16px">Музыку и публикацию в Instagram делает человек. Скрипт сохраняет файлы, но ничего не публикует.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <p><a href="../../index.html">Конструктор завода</a> · <a href="../week1/">Неделя 1</a> · <a href="https://github.com/avtomaster24bot-lab/ai-content-zavod">Репозиторий</a></p>
+    </div>
+  </footer>
+</body>
+</html>
